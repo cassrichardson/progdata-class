@@ -8,11 +8,13 @@ output: html_document
 ## Load packages and data
 
 ```{r setup, message=FALSE}
-# Load the tidyverse package
+install.packages ("tidyverse")
+library (tidyverse)
 ```
 
 ```{r load-data, message=FALSE}
-plastic_waste <- read.csv(here::here("data/plastic-waste.csv"))
+install.packages("here")
+plastic_waste <- read_csv(here::here("data", "plastic-waste.csv"))
 ```
 
 ## Exercises
