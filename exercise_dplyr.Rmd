@@ -115,24 +115,28 @@ Select `year`, `lifeExp`, `country` from the `gapminder`, then arrange in order 
 
 ```{r}
 gapminder |>
-  filter(FILL_THIS_IN)
+  filter(pop > 100000000)
 ```
 
 2. Only keep data _from Asia_ with population greater than 100 million.
 
 ```{r}
 gapminder |>
-  filter(FILL_THIS_IN)
+  filter(continent == "Asia", pop > 100000000)
 ```
 
 3. Only keep data _from the countries Brazil and China_ with population greater than 100 million.
 
 ```{r}
 gapminder |>
-  filter(FILL_THIS_IN)
+  filter(country %in% c("China", "Brazil") & pop > 100000000)
+
+allowed_countries <- c("China", "Brazil")
+gapminder |>
+  filter(country %in% allowed_countries & pop > 100000000)
 ```
 
-
+ 
 ## `mutate()`
 
 The `mutate()` function _creates_ new columns in the tibble by transforming other variables. 
@@ -151,7 +155,10 @@ Let's get:
 
 ```{r}
 gapminder |>
-  mutate(FILL_THIS_IN)
+  mutate(
+    grossGDP = gdpPercap * pop,
+    gdpBill = round(grossGDP/1000000000, 2)
+  )
 ```
 
 Notice the backwards compatibility! No need for loops!
@@ -160,7 +167,12 @@ Try the same thing, but with `transmute` (drops all other variables).
 
 ```{r}
 gapminder |>
-  transmute(FILL_THIS_IN)
+  transmute(
+    country, 
+    year, 
+    grossGDP = gdpPercap * pop,
+    gdpBill = round(grossGDP/1000000000, 2)
+  )
 ```
 
 The `if_else` function is useful for changing certain elements in a data frame.
@@ -169,7 +181,9 @@ Example: Suppose Canada's 1952 life expectancy was mistakenly entered as 68.8 in
 
 ```{r}
 gapminder |>
-  mutate(FILL_THIS_IN)
+  mutate(
+    lifeExp = if_else(country == "Canada" & year == 1952, true = 70, false = lifeExp)
+  )
 ```
 
 Your turn: 
@@ -245,8 +259,8 @@ Like `mutate()`, `summarize()` will compute a new column, but each column needs 
 
 ```{r}
 gapminder |> 
-  summarize(mu = mean(lifeExp),
-            sigma = sd(lifeExp))
+  summarize(mean = mean(lifeExp),
+            sd = sd(lifeExp))
 ```
 
 This is most useful if combined with `group_by()`.
@@ -254,14 +268,14 @@ When you group a data frame, all operations on that data frame are done **separa
 
 ```{r}
 gapminder |> 
-  group_by(year)
+  group_by(continent, year)
 ```
 
 See how the printing of the tibble now says it is grouped?
 
 ```{r}
 gapminder |> 
-  group_by(year) |> 
+  group_by(continent, year) |> 
   summarize(mu = mean(lifeExp),
             sigma = sd(lifeExp))
 ```
