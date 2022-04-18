@@ -1,0 +1,9 @@
+---
+title: "Portfolio 1 - Basics in R Workshop"
+author: "Cassandra Richardson"
+date: "4/18/2022"
+output: html_document
+---
+
+# For this lab I created a repository for project 1:  
+https://github.com/cassrichardson/project1 
