@@ -8,8 +8,10 @@ output: html_document
 ## Load packages and data
 
 ```{r setup, message=FALSE}
+library (dplyr)
 library (tidyverse)
 library (ggplot2)
+library (ggdist)
 ```
 
 ```{r load-data, message=FALSE}
@@ -20,7 +22,7 @@ View(plastic_waste)
 ## Exercises
 
 ### Exercise 1
-# Create a histogram showing the distribution of plastic waste per capita faceted by continent. It looks like Europe, North America, and Asia have the highest plastic waste per captia, whereas Oceania and South America have the least. 
+# Create a histogram showing the distribution of plastic waste per capita faceted by continent.
 ```{r plastic-waste-continent}
 ggplot(plastic_waste) +
   aes(x = plastic_waste_per_cap) +
@@ -37,12 +39,37 @@ ggplot(plastic_waste) +
       fill = continent) + 
   geom_density(aplha = .1)
 ```
+# It looks like Europe, North America, and Asia have the highest plastic waste per captia, whereas Oceania and South America have the least. (3) Color and fill is in the aes() function because it applies to all continents, whereas alpha is in the geom() function because the transparency applies specifically to the density graph elements.
 
 ### Exercise 2
 
 ```{r plastic-waste-density}
-# insert code here
+plastic_waste_filtered <- plastic_waste |>
+  filter(plastic_waste_per_cap < 3.5)
+
+ggplot(plastic_waste_filtered) +
+  aes(x = continent, y = plastic_waste_per_cap,
+      fill = continent) +
+  geom_boxplot()
+
+ggplot(plastic_waste_filtered) +
+  aes(x = continent, y = plastic_waste_per_cap,
+      fill = continent, color = continent) +
+  geom_jitter(height = 0, width = .2, alpha = .3) +
+  geom_boxplot(color = "black", alpha = .5)
+
+ggplot(na.omit(plastic_waste_filtered)) +
+  aes(x = plastic_waste_per_cap, y = continent,
+      fill = continent, color = continent) +
+  geom_jitter(height = .2, alpha = .2) +
+  geom_boxplot(color = "black", alpha = .5, width = .1, size = .5) + 
+  ggdist::stat_slab(height = .3, color = "black", size = .2, aplha = .5, position = position_nudge(y = .2))
 ```
+# For Exercise 2, I made three plots using the data after filtering out the extreme outliers of Trinidad and Tobago: 
+## (1) Simple plot of plastic waste by continent 
+## (2) Added individual data points to previous plot
+## (3) Created a raincloud plot 
+### The density and data points more clearly shows the shape of the distribution and the individual datapoints, compared to the boxplots. 
 
 ### Exercise 3
 
@@ -92,7 +119,7 @@ Remove this text, and add your answer for Exercise 8 here.
 # insert code here
 ```
 
-## Pro-Tips
+## Pro-Tips from Dr. Wiernik 
 
 ### Excercise 3
 
