@@ -8,7 +8,7 @@ library(tidyverse)
     # This data set contains info about 3 different types of penguins on islands in the Palmer Archipelago near Antartica. 
 
 View(penguins)
-  # View the whole data set to see what we're working with! 
+  # Step 2: View the whole data set to see what we're working with! 
 
 dim(penguins)
   # Step 3: Exploring the dimensions of the data frame. 
