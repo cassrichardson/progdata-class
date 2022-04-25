@@ -18,35 +18,40 @@ library (ggdist)
 plastic_waste <- read.csv(here::here("data/plastic-waste.csv"))
 View(plastic_waste)
 ```
+Before we get started, I'm filtering out Trinidad and Tobago because they were extreme outliers. 
+```{r filtering}
+plastic_waste_filtered <- plastic_waste |>
+  filter(plastic_waste_per_cap < 3.5)
+```
+# Exercises
 
-## Exercises
-
-### Exercise 1
-# Create a histogram showing the distribution of plastic waste per capita faceted by continent.
+## Exercise 1 - Create a histogram showing the distribution of plastic waste per capita faceted by continent.
 ```{r plastic-waste-continent}
-ggplot(plastic_waste) +
+ggplot(plastic_waste_filtered) +
   aes(x = plastic_waste_per_cap) +
-  geom_histogram(binwidth = .2, fill = "blue") + 
+  geom_histogram(binwidth = .1, fill = "blue") + 
   facet_wrap (~continent)
 
-ggplot(plastic_waste) +
+ggplot(plastic_waste_filtered) +
   aes(x = plastic_waste_per_cap, y = continent) +
   geom_density(aes(y = after_stat(count))) 
 
-ggplot(plastic_waste) + 
+ggplot(plastic_waste_filtered) + 
   aes(x = plastic_waste_per_cap,
       color = continent, 
       fill = continent) + 
   geom_density(aplha = .1)
 ```
-# It looks like Europe, North America, and Asia have the highest plastic waste per captia, whereas Oceania and South America have the least. (3) Color and fill is in the aes() function because it applies to all continents, whereas alpha is in the geom() function because the transparency applies specifically to the density graph elements.
 
-### Exercise 2
+### Answers: It looks like Europe, North America, and Asia have the highest plastic waste per captia, whereas Oceania and South America have the least. Color and fill is in the aes() function because it applies to all continents, whereas alpha is in the geom() function because the transparency applies specifically to the density graph elements.
+
+## Exercise 2 - Create box plots to compare plastic waste distributions across continents
+### I made three plots using the data after filtering out the extreme outliers of Trinidad and Tobago: 
+(1) Simple plot of plastic waste by continent 
+(2) Added individual data points to previous plot
+(3) Created a raincloud plot 
 
 ```{r plastic-waste-density}
-plastic_waste_filtered <- plastic_waste |>
-  filter(plastic_waste_per_cap < 3.5)
-
 ggplot(plastic_waste_filtered) +
   aes(x = continent, y = plastic_waste_per_cap,
       fill = continent) +
@@ -65,20 +70,18 @@ ggplot(na.omit(plastic_waste_filtered)) +
   geom_boxplot(color = "black", alpha = .5, width = .1, size = .5) + 
   ggdist::stat_slab(height = .3, color = "black", size = .2, aplha = .5, position = position_nudge(y = .2))
 ```
-# For Exercise 2, I made three plots using the data after filtering out the extreme outliers of Trinidad and Tobago: 
-## (1) Simple plot of plastic waste by continent 
-## (2) Added individual data points to previous plot
-## (3) Created a raincloud plot 
-## The density and data points more clearly shows the shape of the distribution and the individual datapoints, compared to the boxplots. 
 
-### Exercise 3
+### Answer: The density and data points more clearly shows the shape of the distribution and the individual datapoints, compared to the boxplots. 
+
+## Exercise 3
 
 ```{r plastic-waste-mismanaged}
 ggplot(plastic_waste_filtered) + 
   aes (x = plastic_waste_per_cap, y = mismanaged_plastic_waste_per_cap) +
   geom_point()
 ```
-# In this scatterplot, I visualized the relationship between plastic waste per capita and mismanaged waste per capita. It appears that as there is an increase in plastic waste, there is an increase in mismanagement of the plastic waste. 
+
+In this scatterplot, I visualized the relationship between plastic waste per capita and mismanaged waste per capita. It appears that as there is an increase in plastic waste, there is an increase in mismanagement of the plastic waste. 
 
 ```{r plastic-waste-mismanaged-continent}
 ggplot(plastic_waste_filtered) + 
@@ -86,7 +89,8 @@ ggplot(plastic_waste_filtered) +
        fill = continent, color = continent) +
   geom_point()
 ```
-# In this scatterplot, I colored the points by continent. It looks like Europe and South America have a low level of mismanagement, even when their plastic waste increases. In most of Africa and Asia, mismanagement increases linearly with the amount of plastic waste they produce. 
+
+In this scatterplot, I colored the points by continent. It looks like Europe and South America have a low level of mismanagement, even when their plastic waste increases. In most of Africa and Asia, mismanagement increases linearly with the amount of plastic waste they produce. 
 
 ```{r plastic-waste-population-total}
 ggplot(plastic_waste_filtered) + 
@@ -101,9 +105,10 @@ ggplot(plastic_waste_filtered) +
   geom_point() +
   geom_smooth ()
 ```
-# In these scatterplots, I compared the relationship between plastic waste per capita and total population or coastal population using a curved loess trend line. In the relationship with total population, waste increases as population increases, except for two outliers in countries with the highest populations that have low plastic waste. With coastal populations, plastic waste per capita actually tends to decrease with larger coastal populations.  
 
-### Exercise 4 - Bonus
+In these last two scatterplots, I compared the relationship between plastic waste per capita and total population or coastal population using a curved loess trend line. In the relationship with total population, waste increases as population increases, except for two outliers in countries with the highest populations that have low plastic waste. With coastal populations, plastic waste per capita actually tends to decrease with larger coastal populations.  
+
+## Exercise 4 - Bonus
 
 ```{r recreate-viz}
 # insert code here
