@@ -11,15 +11,22 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(gapminder)
 ```
-## Exercise 24.2
+
 ```{r table}
 print(gapminder)
-```
+``` 
+
+# Exercise 1 
+
+## Part 1: Filter gapminder to three countries of my choice:
 
 ```{r dplyr 1.1}
 gapminder_three <- gapminder |> 
   filter((country == "Iceland" | country == "Italy" | country == "Switzerland") & year >= 1970, year < 1980)
+ print(gapminder_three)
 ```
+
+## Part 2: Same as above, then select "country" and "gdpPercap"
 
 ```{r dplyr 1.2}
 gapminder_three <- gapminder |> 
@@ -27,34 +34,55 @@ gapminder_three <- gapminder |>
   select(country, gdpPercap)
   print(gapminder_three)
 ```
+
+## Part 3: Create a new variable for the change in life expectancy from the previous measurement for that country. Then filter to only show countries that experienced a drop in life expectancy. 
+
 ```{r dplyr 1.3}
 lifeExp_decrease <- gapminder|>
   group_by(country) |>
   mutate(lifeExp_decrease = lifeExp - lag(lifeExp)) |>
   filter(lifeExp_decrease < 0)
-
   print(lifeExp_decrease)
 ```
-```{r}
-print(gapminder)
+
+## Part 4: Filter gapminder to show the max GDP per capita for each country 
+
+```{r dplyr 1.4}
+
 ```
 
-## R Markdown
+## Part 5: Create a scatterplot of Canda's life expectancy vs. GDP per capita, and put GDP per capita on a log scale. 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r dplyr 1.5}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+# Exercise 2: Explore two variables with dplyr and ggplot2
 
-You can also embed plots, for example:
+## Part 1: Pick two quantitative variables to explore.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+### Step 1: Make a summary table of the descriptives statistics for these variables 
+
+```{r summary table}
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Step 2: Make a scatterplot of these variables 
+
+```{r scatterplot}
+
+```
+
+## Part 2: Pick one categorical and one quantitative variable to explore. 
+
+### Step 1: Make a summary table giving the sample size and descriptives statistics for the quantitative variable by group 
+
+```{r summary table - sample size and descriptives}
+
+```
+
+### Step 2: Make a plot to visualize these variables.  
+
+```{r plots}
+
+```
