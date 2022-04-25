@@ -69,51 +69,41 @@ ggplot(na.omit(plastic_waste_filtered)) +
 ## (1) Simple plot of plastic waste by continent 
 ## (2) Added individual data points to previous plot
 ## (3) Created a raincloud plot 
-### The density and data points more clearly shows the shape of the distribution and the individual datapoints, compared to the boxplots. 
+## The density and data points more clearly shows the shape of the distribution and the individual datapoints, compared to the boxplots. 
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 3 here.
-
-### Exercise 4
-
-Remove this text, and add your answer for Exercise 4 here.
-
-```{r plastic-waste-violin}
-# insert code here
-```
-
-### Exercise 5
-
-Remove this text, and add your answer for Exercise 5 here.
-
 ```{r plastic-waste-mismanaged}
-# insert code here
+ggplot(plastic_waste_filtered) + 
+  aes (x = plastic_waste_per_cap, y = mismanaged_plastic_waste_per_cap) +
+  geom_point()
 ```
-
-### Exercise 6
-
-Remove this text, and add your answer for Exercise 6 here.
+# In this scatterplot, I visualized the relationship between plastic waste per capita and mismanaged waste per capita. It appears that as there is an increase in plastic waste, there is an increase in mismanagement of the plastic waste. 
 
 ```{r plastic-waste-mismanaged-continent}
-# insert code here
+ggplot(plastic_waste_filtered) + 
+  aes (x = plastic_waste_per_cap, y = mismanaged_plastic_waste_per_cap,
+       fill = continent, color = continent) +
+  geom_point()
 ```
-
-### Exercise 7
-
-Remove this text, and add your answer for Exercise 7 here.
+# In this scatterplot, I colored the points by continent. It looks like Europe and South America have a low level of mismanagement, even when their plastic waste increases. In most of Africa and Asia, mismanagement increases linearly with the amount of plastic waste they produce. 
 
 ```{r plastic-waste-population-total}
-# insert code here
+ggplot(plastic_waste_filtered) + 
+  aes (x = total_pop, y = plastic_waste_per_cap) +
+  geom_point() +
+  geom_smooth()
 ```
 
 ```{r plastic-waste-population-coastal}
-# insert code here
+ggplot(plastic_waste_filtered) + 
+  aes (x = coastal_pop, y = plastic_waste_per_cap) +
+  geom_point() +
+  geom_smooth ()
 ```
+# In these scatterplots, I compared the relationship between plastic waste per capita and total population or coastal population using a curved loess trend line. In the relationship with total population, waste increases as population increases, except for two outliers in countries with the highest populations that have low plastic waste. With coastal populations, plastic waste per capita actually tends to decrease with larger coastal populations.  
 
-### Exercise 8
-
-Remove this text, and add your answer for Exercise 8 here.
+### Exercise 4 - Bonus
 
 ```{r recreate-viz}
 # insert code here
@@ -121,11 +111,9 @@ Remove this text, and add your answer for Exercise 8 here.
 
 ## Pro-Tips from Dr. Wiernik 
 
-### Excercise 3
+### Excercise 3 - Try This 
 
-Try this :D
-
-```
+``` {r try this}
 ggplot(data = plastic_waste, 
        mapping = aes(x = continent, 
                      y = plastic_waste_per_cap)) +
