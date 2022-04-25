@@ -97,14 +97,19 @@ ggplot(penguin_data) +
 
 ## Part 2: Pick one categorical and one quantitative variable to explore. 
 
-### Step 1: Make a summary table giving the sample size and descriptives statistics for the quantitative variable by group 
+### Step 1: Make a summary table giving the sample size and descriptives statistics for the quantitative variable by group. This table shows us the number of each species of penguin, and each species' average body mass and bill length. 
 
 ```{r summary table - sample size and descriptives}
-
+penguin_data |> 
+  group_by(species) |>
+  summarize(n = n(), mean(body_mass_g, na.rm = T), mean(bill_length_mm, na.rm = T))
 ```
 
 ### Step 2: Make a plot to visualize these variables.  
 
 ```{r plots}
-
+ggplot(penguin_data) + 
+  aes (x = body_mass_g, y = bill_length_mm,
+       fill = species, color = species, shape = sex) +
+  geom_point()
 ```
