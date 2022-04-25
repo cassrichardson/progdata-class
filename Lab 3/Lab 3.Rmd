@@ -11,9 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(gapminder)
 ```
+# Before we get started, let's see what our data set looks like: 
 
 ```{r table}
-print(gapminder)
+View(gapminder)
 ``` 
 
 # Exercise 1 
@@ -48,13 +49,25 @@ lifeExp_decrease <- gapminder|>
 ## Part 4: Filter gapminder to show the max GDP per capita for each country 
 
 ```{r dplyr 1.4}
-
+gapminder_maxGDP <- gapminder |>
+  group_by(country) |> 
+  mutate(maxGDP = max(gdpPercap)) |> 
+  filter(maxGDP == gdpPercap)
+  print(gapminder_maxGDP)
 ```
 
 ## Part 5: Create a scatterplot of Canda's life expectancy vs. GDP per capita, and put GDP per capita on a log scale. 
 
-```{r dplyr 1.5}
-
+```{r dplyr 1.5.1}
+Canada <- gapminder |> 
+  filter(country == "Canada")
+```
+```{r dplyr 1.5.2}
+ggplot(Canada) + 
+  aes (x = lifeExp, y = gdpPercap) +
+  geom_point() + 
+  scale_x_continuous(trans = "log10")
+  print(Canada)
 ```
 
 # Exercise 2: Explore two variables with dplyr and ggplot2
