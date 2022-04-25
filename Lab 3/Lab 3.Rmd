@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+library(palmerpenguins)
 library(tidyverse)
 library(gapminder)
 ```
@@ -46,7 +47,7 @@ lifeExp_decrease <- gapminder|>
   print(lifeExp_decrease)
 ```
 
-## Part 4: Filter gapminder to show the max GDP per capita for each country 
+## Part 4: Filter gapminder to show the max GDP per capita for each country. 
 
 ```{r dplyr 1.4}
 gapminder_maxGDP <- gapminder |>
@@ -76,14 +77,22 @@ ggplot(Canada) +
 
 ### Step 1: Make a summary table of the descriptives statistics for these variables 
 
-```{r summary table}
+```{r penguins}
+penguin_data <- palmerpenguins::penguins
+```
 
+```{r summary table}
+penguin_data |> 
+  summarize(mean(body_mass_g, na.rm = T), sd(body_mass_g, na.rm = T), mean (bill_length_mm, na.rm = T), sd(bill_length_mm, na.rm = T))
 ```
 
 ### Step 2: Make a scatterplot of these variables 
 
 ```{r scatterplot}
-
+ggplot(penguin_data) + 
+  aes (x = body_mass_g, y = bill_length_mm) +
+  geom_point() +
+  geom_smooth()
 ```
 
 ## Part 2: Pick one categorical and one quantitative variable to explore. 
