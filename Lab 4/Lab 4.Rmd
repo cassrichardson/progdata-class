@@ -1,0 +1,67 @@
+---
+title: "Lab 4"
+author: "Cassandra Richardson"
+date: "4/25/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(dplyr)
+library(gapminder)
+
+dictionary <- readr::read_csv(here::here("data", "green_dictionary.csv"))
+green_data <- readr::read_csv(here::here("data", "green_data.csv")) 
+```
+
+# 1. Inspect the item responses (e.g., with graphs or by summarizing distinct values). Is there anything unusual?
+
+```{r examining data}
+View(green_data)
+View(dictionary)
+```
+
+## Through looking at the scales in the dictionary, I realized that some of the variables are coded as -1, meaning that they will need to be reverse-coded before conducting analyses. 
+
+``` {r reverse coding}
+green_data |>
+  mutate( 
+    across(-id,\(x) recode(x, "1" = 1, "2" = 2, "3" = 3,"4" = 4, "5" = 5, "-99" = NA_real_)))
+
+dict <- psychTools::bfi.dictionary |>
+  as_tibble(rownames =  = "item")
+
+reversed <- dict |>
+  filter(Keying == -1) |>
+  pull(item)
+```
+``` {r summary}
+summary(green_data)
+
+green_reputation <- data.frame(var1=c(2, 3, 4, 5, 6))
+compassion <- data.frame(var2=c(7:16))
+intellectual_curiosity <- 
+openness
+
+colMeans(green_reputation)
+colMeans(green_reputation)
+colMeans(green_reputation)
+colMeans(green_reputation)
+```
+
+```{r plots}
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
