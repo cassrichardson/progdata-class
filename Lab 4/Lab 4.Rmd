@@ -7,12 +7,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-install.packages("naniar")
 
 library(ggplot2)
 library(dplyr)
 library(gapminder)
-library(naniar)
 
 dictionary <- readr::read_csv(here::here("data", "green_dictionary.csv"))
 green_data <- readr::read_csv(here::here("data", "green_data.csv")) 
@@ -30,10 +28,10 @@ View(dictionary)
 ``` {r reverse coding}
 reversed <- c("green2", "comp6", "comp7", "comp8", "comp9", "comp10", "intel7", "intel8", "intel9", "intel10", "open7", "open8", "open9", "open10")
 
-green_data |>
+green_data_r <- green_data |>
   mutate_all(na_if, -99)
   
-green_data |>
+green_data_r |>
   mutate(across(
     all_of(reversed),
     \(x) recode(x, "5" = 1, "4" = 2, "3" = 3, "2" = 4, "1" = 5, "-99" = NA_real_))) 
@@ -42,7 +40,7 @@ reversed_item <- \(x){recode(x, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1)}
 
 reversed_item(1:5)
 
-View(green_data)
+View(green_data_r)
 ```
 
 # 2. Compute total scores for the four scales. 
@@ -59,6 +57,11 @@ colMeans(green_total, na.rm = T)
 colMeans(comp_total, na.rm = T)
 colMeans(intel_total, na.rm = T)
 colMeans(open_total, na.rm = T)
+```
+# 3. Rescale variables to be 0-100 instead of original scales. Name these variables *_pomp
+
+```{r rescale}
+
 ```
 
 ```{r plots}
