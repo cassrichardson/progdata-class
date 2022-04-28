@@ -1,0 +1,39 @@
+---
+title: "Lab 5A"
+author: "Cassandra Richardson"
+date: "4/20/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+lotr  <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/lotr_tidy.csv") |> 
+  rename(Species = Race)
+```
+
+# Exercise 1: Univariate Pivoting 
+
+```{r lotr}
+View(lotr)
+```
+### After viewing this data, it would not be considered tidy for the analyses I would expect to conduct on it. For instance, I would consider each movie to be one observation, meaning that I would expect each movie to be represented once, with information about that movie in each column. To me, this data is too long. 
+
+## Question 2. Widen the data so that we see the words spoken by each species, by putting species as its own column.
+
+```{r pivot wide}
+(lotr_wide <- lotr |> 
+  pivot_wider(id_cols = c(Film, Gender), 
+              names_from = Species, 
+              values_from = Words))
+```
+
+## Question 3. Re-lengthen the wide LOTR from question 2. 
+
+```{r pivot long}
+lotr_wide |> 
+  pivot_longer(cols = c(Elf, Hobbit, Man), 
+               names_to  = "Species", 
+               values_to = "Words")
+```
