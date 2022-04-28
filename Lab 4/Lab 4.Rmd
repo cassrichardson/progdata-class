@@ -26,16 +26,15 @@ View(dictionary)
 ## Through looking at the scales in the dictionary, I realized that some of the variables are coded as -1, meaning that they will need to be reverse-coded before conducting analyses. 
 
 ``` {r reverse coding}
-green_data |>
-  mutate( 
-    across(-id,\(x) recode(x, "1" = 1, "2" = 2, "3" = 3,"4" = 4, "5" = 5, "-99" = NA_real_)))
+reversed <- c("green2", "comp6", "comp7", "comp8", "comp9", "comp10", "intel7", "intel8", "intel9", "intel10", "open7", "open8", "open9", "open10")
 
-dict <- psychTools::bfi.dictionary |>
-  as_tibble(rownames =  = "item")
-
-reversed <- dict |>
-  filter(Keying == -1) |>
-  pull(item)
+green_data_r <- green_data |>
+  mutate(across(
+    all_of(reversed),
+    \(x) recode(x, "5" = 1, "4" = 2, "3" = 3, "2" = 4, "1" = 5),
+    .names = "{.col}r"
+  )) |>
+  head()
 ```
 ``` {r summary}
 summary(green_data)
