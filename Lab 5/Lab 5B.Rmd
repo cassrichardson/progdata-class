@@ -4,7 +4,7 @@ author: "Cassandra Richardson"
 date: "4/20/2022"
 output: html_document
 ---
-# Step 1: Import the data for this lab:
+# Step 1: Import the data for this lab, and visually explore the data:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -26,22 +26,21 @@ family  <- read_csv(
       ~ ifelse(family_id %in% missing_w2_child, NA_real_, .x)
     )
   )
-```
 
-# Step 2: Let's see what we're working with:
-
-```{r exploring data}
 family |> 
   knitr::kable()
-
-View(family)
 ```
 
 # Question 1: Pivot data to a longer format such that each row is 1 score, with columns for family_id, family_member, wave, scale, and score 
 
 ```{r pivot longest}
 family_longest <- family |> 
-  pivot_longer()
+  pivot_longer(
+    cols = w1_comm_parent:w2_satis_child,
+    names_to = c("wave", "scale", "family_member"),
+    names_sep = "_",
+    values_to = "score"
+  )
 
 print(family_longest)
 ```
@@ -49,12 +48,17 @@ print(family_longest)
 # Question 2: Pivot data to a longer format such that each row is 1 person, with columns for family_id, family_member, wave, comm, and satis
 
 ```{r pivot longer}
-family_longest <- family |> 
-  pivot_longer()
+family_longer <- family |> 
+  pivot_longer(
+    cols = w1_comm_parent:w2_satis_child,
+      names_to = c("wave", ".value", "family_member"),
+      names_sep = "_",
+      values_to = "score"
+  )
 
-print(family_longest)
+print(family_longer)
 ```
 
 # Question 3: Some families are missing wave 2 data for parent, child or both. Which families are missing wave 2 data for at least one person?
 
-## Answer: Families (id = x, x) are missing wave 2 data. It's easier to find this missing data in the longer format because each 
+## Answer: Multiple families (id = 7, 14, 23, 26, ...) are missing wave 2 data. It's easier to find this missing data in the longer format because each row is either assigned to one score, or one person, rather than having multiple vairables within the same column, as we saw with the original wide dataset. 
