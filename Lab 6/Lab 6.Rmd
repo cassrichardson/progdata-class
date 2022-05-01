@@ -16,48 +16,60 @@ locations <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class
 (time <- as_tibble(songs) |> 
    rename(song = title))
 
-view(time)
-View(album)
+(album <- as_tibble(locations) |> 
+   select(title, everything()) |> 
+   rename(album = release,
+          song  = title))
+
+#view(time)
+#View(album)
 ```
 
 # Exercise 1 - singer package 
 
 ## Question 1: For which of the songs in "time" do we know its corresponding album?
 
-### In order to match the songs in "time" with the albums in "album," we need to join the tables: 
+#### In order to match the songs in "time" with the albums in "album," we need to join the tables: 
 
-```{r inner join}
+```{r song and album}
 time |> 
   inner_join(album, by = "song") 
 ```
 
-## In this code, I combined the two tables on the basis of having the same songs. This shows us that we know the corresponding album of 13 songs. 
+#### In this code, I combined the two tables on the basis of having the same songs. This shows us that we know the corresponding album of 13 songs. 
 
 ## Question 2: Add the corresponding albums to "time", while keeping all rows even if the album information is not available. 
 
-``` {r }
+``` {r add albums to time}
 time |>
   left_join(album, by = "song")
 ```
 
-## "left_join" prioritizes the first datset (i.e., time) and preserves all rows, while adding in the album data by matching songs. 
+#### "left_join" prioritizes the first datset (i.e., time) and preserves all rows, while adding in the album data by matching songs. 
 
-##Question 3: Which songs have year but not album information?
+## Question 3: Which songs have year but not album information?
 
-```{r}
-
+```{r year not album}
+anti_join(time, album, by = "song")
 ```
 
-## Answer 
+#### In this function, I am returning all rows from "time" where there are NOT matching values in "album" because I want to filter out all the songs that we DO have album information for. This shows us that there are 9 songs from "time" that we have year information for, but not album information. 
+
 
 ## Question 4: Which artists are in "time" but not "album"?
 
-```{r}
-
+```{r artists}
+anti_join(time, album, by = "artist_name")
 ```
+#### This function is the same as question 3, but instead of matching datasets on the basis of songs, I matched them on the basis of artist names. The only artist that is in "time" but not "album" is Mariah Carey. 
 
 ## Question 5: Merge the two tibbles
 
+```{r merging}
+full_join(time, album)
+```
+
+#### By using "full_join" this returns all rows and all columns from both datsets, putting NA when there are not matching values. 
 
 
 # Exercise 2 - LOTR 
