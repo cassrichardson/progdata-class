@@ -67,7 +67,76 @@ green_data_rescaled <- green_total_scores |>
 
 # 4. Make plots for the distributions of the 4 pomp-scored variables
 
+## Histogram for total score on green reputation: 
+
 ```{r plots}
-
-
+ggplot(green_data_rescaled) + 
+  aes (x = green_total_pomp) +
+  geom_histogram(binwidth = 1)
 ```
+
+## Histogram for total score on compassion:
+
+```{r plots}
+ggplot(green_data_rescaled) + 
+  aes (x = compassion_total_pomp) +
+  geom_histogram(binwidth = 1)
+```
+
+## Histogram for total score on openness to experiences: 
+
+```{r plots}
+ggplot(green_data_rescaled) + 
+  aes (x = open_total_pomp) +
+  geom_histogram(binwidth = 1)
+```
+
+## Histogram for total score on intellectual curiosity:
+
+```{r plots}
+ggplot(green_data_rescaled) + 
+  aes (x = intel_total_pomp) +
+  geom_histogram(binwidth = 1)
+```
+
+# 5. Make scatterplots showing the relationship between green reputation and each personality trait. Include a trend line for students and non-students. What do these plots show? 
+
+## Scatterplot for green reputation and compassion:
+
+```{r plots}
+green_data_rescaled |>
+  filter(!is.na(student)) |>
+ggplot() +
+  aes(x = compassion_total_pomp, y = green_total_pomp,
+       fill = factor(student)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Scatterplot for green reputation and openness:
+
+```{r plots}
+green_data_rescaled |>
+  filter(!is.na(student)) |>
+ggplot() +
+  aes(x = openness_total_pomp, y = green_total_pomp,
+       fill = factor(student)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Scatterplot for green reputation and intellectual curiosity:
+
+```{r plots}
+green_data_rescaled |>
+  filter(!is.na(student)) |>
+ggplot() +
+  aes(x = intel_total_pomp, y = green_total_pomp,
+       fill = factor(student)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Answer: These scatterplots show a positive linear relationship between personality traits (compassion, openness, and intellectual curiosity) and green reputation such that as the personality scores increase, green reputation scores also increase. There does not seem to be much of a diference between students and non-students, except with intellectual curiosity the trend lines intersect. 
+
+# 6. 
