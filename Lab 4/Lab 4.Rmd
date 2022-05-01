@@ -28,25 +28,21 @@ View(dictionary)
 ``` {r reverse coding}
 reversed <- c("green2", "comp6", "comp7", "comp8", "comp9", "comp10", "intel7", "intel8", "intel9", "intel10", "open7", "open8", "open9", "open10")
 
-green_data_r <- green_data |>
+green_data_fix <- green_data |>
   mutate_all(na_if, -99)
   
-green_data_r |>
+green_data_recoded <- green_data_fix |>
   mutate(across(
     all_of(reversed),
     \(x) recode(x, "5" = 1, "4" = 2, "3" = 3, "2" = 4, "1" = 5, "-99" = NA_real_))) 
 
-reversed_item <- \(x){recode(x, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1)}
-
-reversed_item(1:5)
-
-View(green_data_r)
+View(green_data_recoded)
 ```
 
 # 2. Compute total scores for the four scales. 
 
 ``` {r scale scores}
-summary(green_data)
+summary(green_data_recoded)
 
 green_total <- data.frame(var1=c(2:6))
 comp_total<- data.frame(var2=c(7:16))
