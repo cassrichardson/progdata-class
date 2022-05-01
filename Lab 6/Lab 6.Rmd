@@ -1,0 +1,100 @@
+---
+title: "Lab 6"
+author: "Cassandra Richardson"
+date: "4/12/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+songs <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class/master/data/singer/songs.csv")
+locations <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class/master/data/singer/loc.csv")
+
+(time <- as_tibble(songs) |> 
+   rename(song = title))
+
+view(time)
+View(album)
+```
+
+# Exercise 1 - singer package 
+
+## Question 1: For which of the songs in "time" do we know its corresponding album?
+
+### In order to match the songs in "time" with the albums in "album," we need to join the tables: 
+
+```{r inner join}
+time |> 
+  inner_join(album, by = "song") 
+```
+
+## In this code, I combined the two tables on the basis of having the same songs. This shows us that we know the corresponding album of 13 songs. 
+
+## Question 2: Add the corresponding albums to "time", while keeping all rows even if the album information is not available. 
+
+``` {r }
+time |>
+  left_join(album, by = "song")
+```
+
+## "left_join" prioritizes the first datset (i.e., time) and preserves all rows, while adding in the album data by matching songs. 
+
+##Question 3: Which songs have year but not album information?
+
+```{r}
+
+```
+
+## Answer 
+
+## Question 4: Which artists are in "time" but not "album"?
+
+```{r}
+
+```
+
+## Question 5: Merge the two tibbles
+
+
+
+# Exercise 2 - LOTR 
+
+```{ r setup}
+fell <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
+ttow <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv")
+retk <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv")
+```
+
+## Question 1: Stack these three tibbles into one tibble. 
+
+``` {r joining}
+
+```
+
+## Question 2: Which races are in "The Fellowship of the Ring" but not in the other tibbles?
+
+```{r races}
+
+```
+
+# Exercise 3: Set operations 
+
+## Question 1: Show rows that appear in both "y" and "z"
+
+```{r yz}
+
+```
+
+## Question 2: Make a dataset to reflect that day 1 in "y" was day 2 in "z"
+
+```{r lag day one?}
+
+```
+
+## Question 3: Removes z's rows from y
+``` {r delete}
+
+```
