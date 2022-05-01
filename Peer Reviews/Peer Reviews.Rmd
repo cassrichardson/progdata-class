@@ -8,10 +8,10 @@ output: html_document
 # Peer Reviews:
 
 1: https://github.com/avenetto/progdata-class/issues/5#issue-1222314035
-2:
-3:
-4:
-5:
+2: https://github.com/shossain7757/progdata-class/issues/7#issue-1222315995 
+3: https://github.com/sabeisenberg/progdata-class/issues/9#issue-1222319099
+4: https://github.com/KiprasVarkala/progdata-class/issues/4#issue-1222325161
+5: 
 6:
 7:
 8:
