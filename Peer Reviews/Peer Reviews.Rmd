@@ -1,0 +1,21 @@
+---
+title: "Peer Reviews"
+author: "Cassandra Richardson"
+date: "5/1/2022"
+output: html_document
+---
+
+# Peer Reviews:
+
+1: https://github.com/avenetto/progdata-class/issues/5#issue-1222314035
+2:
+3:
+4:
+5:
+6:
+7:
+8:
+9:
+10:
+11:
+12:
