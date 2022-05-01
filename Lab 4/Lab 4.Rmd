@@ -44,33 +44,30 @@ View(green_data_recoded)
 ``` {r scale scores}
 summary(green_data_recoded)
 
-green_total <- data.frame(var1=c(2:6))
-comp_total<- data.frame(var2=c(7:16))
-intel_total <- data.frame(var3=c(17:26))
-open_total <- data.frame(var4=c(27:36))
-
-colMeans(green_total, na.rm = T)
-colMeans(comp_total, na.rm = T)
-colMeans(intel_total, na.rm = T)
-colMeans(open_total, na.rm = T)
+green_total_scores <- green_data_recoded |>
+  rowwise() |>
+  mutate(
+    id = id, 
+    green_total = mean(c_across(green1:green5), na.rm = T),
+    compassion_total = mean(c_across(comp1:comp10), na.rm = T),
+    openness_total = mean(c_across(open1:open10), na.rm = T),
+    intel_total = mean(c_across(intel1:intel10), na.rm = T),
+    .before = everything())
 ```
 # 3. Rescale variables to be 0-100 instead of original scales. Name these variables *_pomp
 
 ```{r rescale}
-
+green_data_rescaled <- green_total_scores |>
+  mutate(
+    across(green_total:intel_total,
+    \(x) 100 * (x-1)/(5-1),
+    .names = "{.col}_pomp"), 
+    .before = everything())
 ```
+
+# 4. Make plots for the distributions of the 4 pomp-scored variables
 
 ```{r plots}
 
 
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
