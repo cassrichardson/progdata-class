@@ -77,7 +77,7 @@ time |>
 
 # Exercise 2 - LOTR 
 
-```{r lotr setup}
+```{r lotr setup, include=FALSE}
 fell <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
 ttow <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv")
 retk <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv")
@@ -117,19 +117,25 @@ q2 <- fell |>
 ## Question 1: Show rows that appear in both "y" and "z"
 
 ```{r yz}
-FILL_THIS_IN(y, z)
+intersect(y, z)
 ```
+
+#### The "intersect" function returns only the observations that are in both y and z
 
 ## Question 2: Make a dataset to reflect that day 1 in "y" was day 2 in "z"
 
 ```{r lag day one?}
-FILL_THIS_IN(
+union (
   mutate(y, day = "Day 1"),
   mutate(z, day = "Day 2")
 )
 ```
 
+#### This tibble has a new variable added, "day", to reflect the day that data was collected. The "union" function returns the unique observations in y and z
+
 ## Question 3: Removes z's rows from y
 ``` {r delete}
-FILL_THIS_IN(FILL_THIS_IN, FILL_THIS_IN)
+setdiff(y, z)
 ```
+
+#### The "setdiff" function returns observations that are in y, but not in z. This removes all of z's rows from y. 
