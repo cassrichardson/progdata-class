@@ -14,8 +14,8 @@ output: html_document
 5: https://github.com/tinale9/ProgDataClass/issues/4#issue-1222326767
 6: https://github.com/reupton/progdata-class/issues/7#issue-1222327557
 7: https://github.com/negarmaleki96/progdata-class/issues/5#issue-1222328365
-8:
-9:
+8: https://github.com/oujah/progdata-class/issues/5#issue-1222329862
+9: https://github.com/valentinafender/progdata-class/issues/6#issue-1222332152
 10:
 11:
 12:
