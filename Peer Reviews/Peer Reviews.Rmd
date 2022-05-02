@@ -16,6 +16,6 @@ output: html_document
 7: https://github.com/negarmaleki96/progdata-class/issues/5#issue-1222328365
 8: https://github.com/oujah/progdata-class/issues/5#issue-1222329862
 9: https://github.com/valentinafender/progdata-class/issues/6#issue-1222332152
-10:
-11:
-12:
+10: https://github.com/priyacollins/progdata-class/issues/6#issue-1222332738
+11: https://github.com/rrorman/progdata-class/issues/6#issue-1222333453
+12: https://github.com/jayschmidtavendano/progdata-class/issues/6#issue-1222334692 
