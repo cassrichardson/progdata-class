@@ -1,0 +1,93 @@
+---
+title: "old chicken diet analysis"
+author: "Cassandra Richardson"
+date: "5/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Step 5: Let's get some basic descriptive statistics about each variable. 
+
+
+```{r descriptives}
+chicken_data <- ChickWeight
+
+summary <- summary(chicken_data)
+
+print(summary)
+```
+
+### The table printed above gives us a summary of descriptive statistics for all variables. 
+
+
+# Step 6: Let's get the weight of the chickens for each of the four diets:
+
+```{r chicken diets}
+chicken_diets <- chicken_data |>
+  group_by(Diet)|>
+  summarize(
+    mean = mean(weight),
+    sd = sd(weight),
+    min = min(weight),
+    max = max(weight)
+  )
+
+print(chicken_diets)
+```
+
+### In the code above, I used dplyr's "group_by()" function to say that I want to group the descriptives into each of the four chicken diets. After the data is grouped by diet, I found the mean, sd, min, and max chicken weights for each diet. It looks like diet 1 had the lowest mean weight, whereas diet 3 had the highest mean weight. 
+
+# Step 7: Let's make a bar graph to better visualize the chickens' weight by diet! 
+
+```{r bar graph}
+ggplot(chicken_data) +
+  aes(x = Diet, y = weight) +
+  geom_bar(stat = "summary", fun = "mean")
+```
+
+### Now we have a very simple bar graph to represent the mean weight of the chickens at each of the 4 diets! This basic graph uses the ggplot2 package with Diet on the x axis and weight on the y axis. I added (stat = "summary", fun = "mean") to tell R that I don't want the values to be the total count of weights for each diet, but rather the mean weight of each diet. Although this graph gets the job done, let's make this graph look a little better:
+
+# Step 8: Making a better bar graph:
+
+```{r better bar graph}
+ggplot(chicken_data) +
+  aes(x = Diet, y = weight, color = Diet, fill = Diet) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(
+    title = "Chick Weight by Diet",
+    tag = "Figure 1",
+    x = "Diet",
+    y = "Weight"
+)
+```
+
+# Step 9: Conduct a one-way Analysis of Variance (ANOVA) test to see if the is a statistically significant difference between the avergae weights of the chicken in the four diet groups. 
+
+```{r anova}
+anova <- aov(weight ~ Diet, data = chicken_data)
+
+anova_output <- summary(anova)
+
+print(anova_output)
+```
+
+### A one-way ANOVA with type of diet (1, 2, 3, 4) as the between-subjects factor. There was sufficient evidence to conclude that type of diet had an effect on the weight of the chickens, *F* (3, 574) = 10.81, *p* < .001. 
+
+# Step 10: Since there are more than two levels of the IV (Diet), we need to run post-hoc tests to see which diets are significantly different from each other. 
+
+```{r post hoc}
+TukeyHSD(anova)
+```
+
+### Post hoc tests using a Tukey's HSD adjustment indicated that chickens weighed significantly more on diet 3 (*M* = 143, *SD* = 86.5) than on diet 2 (*M* = 123, *SD* = 71.6) or diet 1 (*M* = 103, *SD* = 56.7). 
+
+# *Final Step: Present the findings:*
+
+## A one-way ANOVA with type of diet (1, 2, 3, 4) as the between-subjects factor. There was sufficient evidence to conclude that type of diet had an effect on the weight of the chickens, *F* (3, 574) = 10.81, *p* < .001.Post hoc tests using a Tukey's HSD adjustment indicated that chickens weighed significantly more on diet 3 (*M* = 143, *SD* = 86.5) than on diet 2 (*M* = 123, *SD* = 71.6) or diet 1 (*M* = 103, *SD* = 56.7). These results are displayed in Figure 1. 
+
+## This data came from "ChickWeight" as one of R's built-in datasets available for public use. Unfortunately, the description of the dataset did not include what each diet consisted of, so we cannot make any inferences about the application of our findings. 
+
